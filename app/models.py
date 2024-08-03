@@ -1,5 +1,6 @@
 from typing import Annotated
 
+from fastapi import Query
 from sqlalchemy import Integer
 from sqlalchemy.orm import DeclarativeBase, mapped_column, Mapped, declared_attr, registry
 from sqlalchemy import String
@@ -14,7 +15,8 @@ class Base(DeclarativeBase):
         type_annotation_map={
             intpk: Integer,
             str_10: String(10),
-            str_20: String(20)
+            str_20: String(20),
+
         }
     )
 
