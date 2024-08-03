@@ -1,9 +1,10 @@
+from typing import List
+
 from pydantic import EmailStr
 from sqlalchemy import Computed, DefaultClause, text
-from sqlalchemy.orm import Mapped, mapped_column, column_property
+from sqlalchemy.orm import Mapped, mapped_column, column_property, relationship
 
 from app.models import CustomBase, intpk, str_10, str_20, Base
-
 
 class User(CustomBase):
 
@@ -14,7 +15,7 @@ class User(CustomBase):
     email: Mapped[str]
     hashed_password: Mapped[str]
 
-
+    post: Mapped[List["Post"]] = relationship(back_populates="author")
 
 
 
