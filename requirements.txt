@@ -4,3 +4,4 @@ pydantic-settings>=2.4.0
 sqlalchemy>=2.0.3
 asyncpg>=0.29.0
 alembic>=1.9.4
+uvicorn>=0.30.4
