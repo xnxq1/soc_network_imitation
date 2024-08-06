@@ -10,4 +10,3 @@ class Post(CustomBase):
     dislikes: Mapped[str] = mapped_column(default=0)
     author_id: Mapped[int] = mapped_column(ForeignKey("User.id"))
 
-    author: Mapped["User"] = relationship(back_populates="post")
