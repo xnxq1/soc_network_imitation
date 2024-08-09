@@ -33,7 +33,7 @@ async def get_all_users() -> list[SchemasUser]:
 
 
 @router.get("/me")
-async def get_all_users(user=Depends(JWTUser.get_curr_user)) -> SchemasUser:
+async def get_me(user=Depends(JWTUser.get_curr_user)) -> SchemasUser:
     return user
 
 @router.patch("/changedata")

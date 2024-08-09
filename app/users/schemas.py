@@ -1,6 +1,9 @@
 from fastapi import Query
 from pydantic import BaseModel, EmailStr
 
+from app.posts.models import Post
+from app.posts.schemas import SchemasPost
+
 
 class SchemasUserForAuth(BaseModel):
     email: EmailStr
@@ -20,6 +23,7 @@ class SchemasUser(BaseModel):
     fullname: str
     age: int
     email: EmailStr
+    posts: list[SchemasPost]
 
 
 class SchemasUserForUpdate(BaseModel):

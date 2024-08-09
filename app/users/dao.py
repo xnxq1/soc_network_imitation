@@ -3,6 +3,7 @@ from sqlalchemy import select, insert, update
 from app.db import async_session_factory
 from app.users.models import User
 from app.users.schemas import SchemasUserForRegister
+from sqlalchemy.orm import selectinload
 class DaoUser:
     model = User
 
@@ -16,7 +17,7 @@ class DaoUser:
     @classmethod
     async def get_user_by_id(cls, user_id: int) -> model:
         async with async_session_factory() as session:
-            query = select(cls.model).where(cls.model.id == user_id)
+            query = select(cls.model).options(selectinload(cls.model.posts)).where(cls.model.id == user_id)
             result = await session.execute(query)
             return result.scalar_one_or_none()
 
