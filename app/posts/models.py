@@ -6,7 +6,7 @@ from app.models import CustomBase
 class Post(CustomBase):
 
     text: Mapped[str]
-    likes: Mapped[str] = mapped_column(default=0)
-    dislikes: Mapped[str] = mapped_column(default=0)
+    likes: Mapped[int] = mapped_column(default=0)
+    dislikes: Mapped[int] = mapped_column(default=0)
     author_id: Mapped[int] = mapped_column(ForeignKey("User.id"))
 
