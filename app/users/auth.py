@@ -37,7 +37,6 @@ class JWTBase:
     @classmethod
     def decode_jwt_token(cls, token: str):
         try:
-            print(token)
             payload = jwt.decode(token, settings.SECRETKEY, settings.ALGORITHM)
             return payload
         except JWTError as e:

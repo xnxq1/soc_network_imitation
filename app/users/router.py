@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends, Response, Request
-from app.users.schemas import SchemasUserForRegister, SchemasUser, SchemasUserForAuth
+from app.users.schemas import SchemasUserForRegister, SchemasUser, SchemasUserForAuth, SchemasUserForUpdate
 from app.users.dao import DaoUser
 from app.users.service.hasher import Hasher
-from app.users.service.router_handler import Auth_user
+from app.users.service.router_handler import Auth_user, update_user_data_service
 from app.users.errors import ThereIsAUserError, ValidationError, WrongDataForAuthError
 from app.users.auth import JWTBase, JWTCookies, JWTUser
 
@@ -35,4 +35,10 @@ async def get_all_users() -> list[SchemasUser]:
 @router.get("/me")
 async def get_all_users(user=Depends(JWTUser.get_curr_user)) -> SchemasUser:
     return user
+
+@router.patch("/changedata")
+async def change_data_user(data: SchemasUserForUpdate, user=Depends(JWTUser.get_curr_user)) -> SchemasUser:
+    user_data = await update_user_data_service(dict(data), user.id)
+    return user_data
+
 

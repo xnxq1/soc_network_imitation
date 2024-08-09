@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, update
 
 from app.db import async_session_factory
 from app.users.models import User
@@ -35,3 +35,13 @@ class DaoUser:
             query = select(cls.model)
             res = await session.execute(query)
             return res.scalars().all()
+
+    @classmethod
+    async def update_user_data(cls, user_id, **data):
+        async with async_session_factory() as session:
+            stmt = update(cls.model).values(**data).where(cls.model.id == user_id).returning(cls.model)
+            result = await session.execute(stmt)
+            await session.commit()
+            updated_user = result.scalar_one()
+            await session.refresh(updated_user)
+            return updated_user

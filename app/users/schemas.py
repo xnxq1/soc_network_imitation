@@ -9,8 +9,8 @@ class SchemasUserForAuth(BaseModel):
 
 class SchemasUserForRegister(SchemasUserForAuth):
 
-    first_name: str | None
-    last_name: str | None
+    first_name: str = None
+    last_name: str = None
     age: int = Query(..., gt=0)
 
 
@@ -20,3 +20,10 @@ class SchemasUser(BaseModel):
     fullname: str
     age: int
     email: EmailStr
+
+
+class SchemasUserForUpdate(BaseModel):
+
+    first_name: str = None
+    last_name: str = None
+    age: int | None = Query(..., gt=0)
