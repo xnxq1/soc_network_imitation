@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from functools import wraps
 
 from jose import jwt, JWTError
 
@@ -7,6 +8,20 @@ from fastapi import Response, Request, Depends
 
 from app.users.dao import DaoUser
 from app.users.errors import JWTCustomError
+
+
+
+# def authorization(get_user: bool = False):
+#     def outer(func):
+#         @wraps(func)
+#         async def inner(*args, **kwargs):
+#             if get_user:
+#                 res = await func(*args, **kwargs)
+#             else:
+#                 res = await func(*args, **kwargs)
+#             return res
+#         return inner
+#     return outer
 
 class JWTBase:
 
@@ -44,6 +59,13 @@ class JWTCookies(JWTBase):
         if not token:
             raise JWTCustomError()
         return token
+
+    @classmethod
+    def delete_cookie_jwt(cls, request: Request, responce: Response):
+        if not request.cookies.get('access_token'):
+            raise JWTCustomError(message='Вы не авторизованы')
+        responce.delete_cookie('access_token')
+
 
 
 class JWTUser(JWTCookies):
