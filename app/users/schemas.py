@@ -1,29 +1,16 @@
 from fastapi import Query
 from pydantic import BaseModel, EmailStr
 
-from app.posts.models import Post
-from app.posts.schemas import SchemasPost
+from app.posts.schemas import SchemasPost, SchemasPostForUser
 
 
-class SchemasUserForAuth(BaseModel):
-    email: EmailStr
-    password: str
-
-
-class SchemasUserForRegister(SchemasUserForAuth):
-
-    first_name: str = None
-    last_name: str = None
-    age: int = Query(..., gt=0)
-
-
-class SchemasUser(BaseModel):
+class SchemasUserWithPost(BaseModel):
     first_name: str | None
     last_name: str | None
     fullname: str
     age: int
     email: EmailStr
-    posts: list[SchemasPost]
+    posts: list[SchemasPostForUser]
 
 
 class SchemasUserForUpdate(BaseModel):
@@ -31,3 +18,11 @@ class SchemasUserForUpdate(BaseModel):
     first_name: str = None
     last_name: str = None
     age: int | None = Query(..., gt=0)
+
+class SchemasUser(BaseModel):
+    first_name: str | None
+    last_name: str | None
+    fullname: str
+    age: int
+    email: EmailStr
+

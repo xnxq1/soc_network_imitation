@@ -1,13 +1,12 @@
 from datetime import datetime, timedelta
-from functools import wraps
 
 from jose import jwt, JWTError
 
 from app.config import settings
-from fastapi import Response, Request, Depends
+from fastapi import Response, Request
 
 from app.users.dao import DaoUser
-from app.users.errors import JWTCustomError
+from app.auth.errors import JWTCustomError
 
 
 

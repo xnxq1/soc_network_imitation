@@ -1,11 +1,8 @@
-from typing import List
 
-from pydantic import EmailStr
-from sqlalchemy import Computed, DefaultClause, text
 from sqlalchemy.orm import Mapped, mapped_column, column_property, relationship
 
-from app.models import CustomBase, intpk, str_10, str_20, Base
-from app.posts.models import Post
+from app.models import CustomBase, str_10
+
 class User(CustomBase):
 
     first_name: Mapped[str_10] = mapped_column(nullable=True)
@@ -15,7 +12,7 @@ class User(CustomBase):
     email: Mapped[str] = mapped_column(unique=True)
     hashed_password: Mapped[str]
 
-    posts = relationship("Post")
+    posts = relationship("Post", order_by="and_(Post.is_archived.asc(),Post.likes.desc())")
 
 
 
