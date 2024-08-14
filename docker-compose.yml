@@ -1,9 +1,27 @@
 services:
 
+  db:
+    image: postgres:16.3-alpine
+    restart: always
+    depends_on:
+      - redis
+    env_file:
+      - .env
+
+  redis:
+    image: redis:6-alpine
+    restart: always
+    env_file:
+      - .env
+
   app_service:
     build: .
     depends_on:
       - db
+      - redis
+
+    links:
+      - redis
 
     ports:
       - 8000:8000
@@ -19,11 +37,5 @@ services:
     env_file:
       - .env
 
-  db:
-    image: postgres:16.3-alpine
-    restart: always
-
-    env_file:
-      - .env
 
 
