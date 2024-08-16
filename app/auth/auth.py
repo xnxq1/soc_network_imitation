@@ -9,19 +9,6 @@ from app.users.dao import DaoUser
 from app.auth.errors import JWTCustomError
 
 
-
-# def authorization(get_user: bool = False):
-#     def outer(func):
-#         @wraps(func)
-#         async def inner(*args, **kwargs):
-#             if get_user:
-#                 res = await func(*args, **kwargs)
-#             else:
-#                 res = await func(*args, **kwargs)
-#             return res
-#         return inner
-#     return outer
-
 class JWTBase:
 
     @classmethod
@@ -50,7 +37,6 @@ class JWTCookies(JWTBase):
         responce.set_cookie(key='access_token', value=token, httponly=True)
         return token
 
-
     @classmethod
     def get_cookie_jwt(cls, request: Request):
         token = request.cookies.get('access_token')
@@ -63,7 +49,6 @@ class JWTCookies(JWTBase):
         if not request.cookies.get('access_token'):
             raise JWTCustomError(message='Вы не авторизованы')
         responce.delete_cookie('access_token')
-
 
 
 class JWTUser(JWTCookies):

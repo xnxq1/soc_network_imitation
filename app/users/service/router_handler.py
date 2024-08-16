@@ -3,7 +3,6 @@ from app.users.dao import DaoUser
 
 async def update_user_data_service(user_data: dict, user_id: int):
     filtered_data = {key: value for key, value in user_data.items() if value is not None}
-    print(filtered_data)
     user_data = await DaoUser.update_user_data(user_id, **filtered_data)
-    print(1)
     return user_data
+

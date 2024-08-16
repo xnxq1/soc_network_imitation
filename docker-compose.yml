@@ -16,28 +16,15 @@ services:
     env_file:
       - .env
 
-  cassandra:
-    image: cassandra:3.11.17
-    container_name: cassandra_container
-    ports:
-      - "9042:9042"
-    environment:
-      CASSANDRA_CLUSTER_NAME: "Cluster"
-      CASSANDRA_SEEDS: "cassandra"
-      CASSANDRA_REPLICATION_FACTOR: "1"
-
-
   app_service:
     build: .
     container_name: app_service_container
     depends_on:
       - db
       - redis
-      - cassandra
 
     links:
       - redis
-      - cassandra
 
     ports:
       - 8000:8000

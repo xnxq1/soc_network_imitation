@@ -1,10 +1,10 @@
 from app.db import async_session_factory
 from sqlalchemy import select, insert, update, and_
-from app.likes.models import Like
+from app.likes.models import LikePost
 
 
 class DaoLike:
-    model = Like
+    model = LikePost
     @classmethod
     async def check_like_user(cls, user_id: int, post_id: int):
         async with async_session_factory() as session:

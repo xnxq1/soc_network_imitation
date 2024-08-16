@@ -1,21 +1,33 @@
 from sqlalchemy import select, insert, update, asc
 
 from app.db import async_session_factory
+from app.posts.models import Post, PostStatus
 from app.users.models import User
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload, contains_eager
+
 class DaoUser:
     model = User
 
 
-
     @classmethod
-    async def get_user_by_id(cls, user_id: int) -> model:
+    async def get_user_by_id(cls, user_id: int):
         async with async_session_factory() as session:
-            query = (select(cls.model)
-                     .options(selectinload(cls.model.posts))
-                     .where(cls.model.id == user_id))
+            query = select(cls.model).where(cls.model.id == user_id)
             result = await session.execute(query)
             return result.scalar_one_or_none()
+
+    @classmethod
+    async def get_user_with_posts(cls, user_id: int) -> model:
+        async with async_session_factory() as session:
+            query = (
+                select(cls.model)
+                .options(selectinload(cls.model.posts).selectinload(Post.post_status))
+
+                .where(cls.model.id == user_id)
+            )
+            result = await session.execute(query)
+            user = result.scalars().one_or_none()  # Получаем пользователя или None
+            return user
 
 
 
@@ -29,7 +41,15 @@ class DaoUser:
     @classmethod
     async def get_all_users_with_posts(cls):
         async with async_session_factory() as session:
-            query = select(cls.model).options(selectinload(cls.model.posts))
+            subquery_posts = (
+                select(Post)
+                .options(joinedload(Post.post_status))
+                .subquery()
+            )
+            query = (
+                select(cls.model)
+                .join(subquery_posts, subquery_posts.c.author_id == cls.model.id)
+            )
             res = await session.execute(query)
             return res.scalars().all()
 

@@ -10,7 +10,8 @@ from app.models import Base
 from app.config import settings
 from app.users.models import User
 from app.posts.models import Post
-from app.likes.models import Like
+from app.posts.models import PostStatus
+from app.likes.models import LikePost
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

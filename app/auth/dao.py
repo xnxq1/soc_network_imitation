@@ -1,6 +1,8 @@
 from app.db import async_session_factory
 from app.users.models import User
 from sqlalchemy import select, insert
+
+
 class DaoAuth:
     model = User
 

@@ -4,7 +4,7 @@ from app.posts.dao import DaoPost
 from app.posts.schemas import SchemasPost, SchemasPostForAdd
 from app.posts.service.router_handler import PostHandler
 from app.auth.auth import JWTUser
-
+from app.posts.service.router_handler import PostHandler
 router = APIRouter(prefix='/posts', tags=['Posts'])
 
 
@@ -26,11 +26,11 @@ async def add_post(post: SchemasPostForAdd, user=Depends(JWTUser.get_curr_user))
     return post
 
 
-@router.get("/archivingpost/{post_id}", dependencies=[Depends(JWTUser.get_curr_user)])
-async def archiving_post(post_id: int):
-    await DaoPost.archiving_unarchiving_post(post_id=post_id, archived=True)
+@router.get("/archivingpost/{post_id}")
+async def archiving_post(post_id: int, user=Depends(JWTUser.get_curr_user)):
+    await PostHandler.change_status_archive_service(post_id=post_id, user_id=user.id,  archived=True)
 
 
-@router.get("/unarchivingpost/{post_id}", dependencies=[Depends(JWTUser.get_curr_user)])
-async def unarchiving_post(post_id: int):
-    await DaoPost.archiving_unarchiving_post(post_id=post_id, archived=False)
+@router.get("/unarchivingpost/{post_id}")
+async def unarchiving_post(post_id: int, user=Depends(JWTUser.get_curr_user)):
+    await PostHandler.change_status_archive_service(post_id=post_id, user_id=user.id,  archived=False)

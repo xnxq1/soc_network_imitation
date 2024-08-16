@@ -19,15 +19,10 @@ class RedisConn:
         print("Успешно отключение Redis!")
 
     async def get(self, key):
-        if key.startswith('user_likes'):
-            return await self.redis.smembers(key)
         return await self.redis.get(key)
 
     async def set(self, key, value):
-        if key.startswith('user_likes'):
-            await self.redis.sadd(key, value)
-            await self.redis.expire(key, 30)
-        else:
-            await self.redis.set(key, value)
+        await self.redis.set(key, value)
+
 
 redis = RedisConn()
