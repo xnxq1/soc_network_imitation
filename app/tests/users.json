@@ -1,0 +1,16 @@
+[
+  {
+    "first_name": "Vasya",
+    "last_name": "Pupkin",
+    "age": 18,
+    "email": "test@test.com",
+    "password":"$2b$12$4qd7AtoRU12/qxTDEhCNRu05/kFDoGE57hP54nkXyiajRk7TJ/.0i"
+  },
+  {
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "age": 43,
+    "email": "ivan@test.com",
+    "password":"$2b$12$WDHZW9EW35dPgbvAkYH0TuSeU9vkNxrx9L99wihIKOzxMMMABZ6xK"
+  }
+]
