@@ -11,7 +11,7 @@ from app.posts.models import Post, PostStatus
 from app.users.models import User
 
 
-@pytest.fixture()
+@pytest.fixture(autouse=True, scope='session')
 async def prepare_db():
     assert os.environ['MODE'] == 'TEST'
     async with engine.begin() as conn:
@@ -36,7 +36,7 @@ async def prepare_db():
 
 
 
-@pytest.fixture()
+@pytest.fixture(scope='session')
 async def event_loop(request):
     loop = asyncio.get_event_loop_policy().new_event_loop()
     yield loop

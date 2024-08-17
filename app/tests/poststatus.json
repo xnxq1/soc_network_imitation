@@ -2,22 +2,22 @@
 
   {
     "id": 1,
-    "is_archived": "False",
-    "is_changed": "False"
+    "is_archived": false,
+    "is_changed": false
   },
   {
     "id": 2,
-    "is_archived": "False",
-    "is_changed": "False"
+    "is_archived": false,
+    "is_changed": false
   },
   {
     "id": 3,
-    "is_archived": "False",
-    "is_changed": "False"
+    "is_archived": false,
+    "is_changed": false
   },
   {
     "id": 4,
-    "is_archived": "False",
-    "is_changed": "False"
+    "is_archived": false,
+    "is_changed": false
   }
 ]

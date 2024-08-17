@@ -51,3 +51,11 @@ class DaoPost:
             stmt = insert(cls.model_status).values(id=post_id, is_archived=False, is_changed=False)
             await session.execute(stmt)
             await session.commit()
+
+    @classmethod
+    async def get_post_status_by_id(cls, post_id):
+        async with async_session_factory() as session:
+            query = select(cls.model_status).where(cls.model_status.id == post_id)
+            result = await session.execute(query)
+            return result.scalar_one()
+

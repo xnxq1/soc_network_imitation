@@ -26,7 +26,7 @@ class DaoUser:
                 .where(cls.model.id == user_id)
             )
             result = await session.execute(query)
-            user = result.scalars().one_or_none()  # Получаем пользователя или None
+            user = result.scalar_one_or_none()
             return user
 
 
@@ -38,20 +38,6 @@ class DaoUser:
             res = await session.execute(query)
             return res.scalars().all()
 
-    @classmethod
-    async def get_all_users_with_posts(cls):
-        async with async_session_factory() as session:
-            subquery_posts = (
-                select(Post)
-                .options(joinedload(Post.post_status))
-                .subquery()
-            )
-            query = (
-                select(cls.model)
-                .join(subquery_posts, subquery_posts.c.author_id == cls.model.id)
-            )
-            res = await session.execute(query)
-            return res.scalars().all()
 
     @classmethod
     async def update_user_data(cls, user_id, **data):
@@ -59,6 +45,7 @@ class DaoUser:
             stmt = update(cls.model).values(**data).where(cls.model.id == user_id).returning(cls.model)
             result = await session.execute(stmt)
             await session.commit()
-            updated_user = result.scalar_one()
-            await session.refresh(updated_user)
+            updated_user = result.scalar_one_or_none()
+            if updated_user is not None:
+                await session.refresh(updated_user)
             return updated_user

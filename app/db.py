@@ -11,7 +11,7 @@ if os.environ.get('MODE') == 'TEST':
     DATABASE_PARAMS = {'poolclass': NullPool}
     engine = create_async_engine(
         DATABASE_URL,
-        echo=True,
+        echo=False,
         future=True,
         **DATABASE_PARAMS,
     )
