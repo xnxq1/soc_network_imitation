@@ -15,8 +15,8 @@ class SchemasUserWithPost(BaseModel):
 
 class SchemasUserForUpdate(BaseModel):
 
-    first_name: str = None
-    last_name: str = None
+    first_name: str | None = None
+    last_name: str | None = None
     age: int | None = Query(..., gt=0)
 
 class SchemasUser(BaseModel):

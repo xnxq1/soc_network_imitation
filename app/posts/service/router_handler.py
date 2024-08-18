@@ -6,7 +6,7 @@ class PostHandler:
 
     @staticmethod
     async def add_post_service(post: dict, user_id: int):
-        if len(post['text']) == 0:
+        if post.get('text') is None or len(post['text']) == 0:
             raise WrongPostError()
         result_post = await DaoPost.add_post(user_id, **post)
         return result_post
