@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy import ForeignKey, Index
+from sqlalchemy import ForeignKey, Index, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models import CustomBase
@@ -11,11 +11,14 @@ class LikeStatus(enum.Enum):
     dislike = 'dislike'
 
 
+
+
 class LikePost(CustomBase):
-    post_id: Mapped[int] = mapped_column(nullable=False)
-    user_id: Mapped[int] = mapped_column(nullable=False)
+    post_id: Mapped[int] = mapped_column(ForeignKey('Post.id'), nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey('User.id'), nullable=False)
     status: Mapped[LikeStatus] = mapped_column(nullable=False)
 
     __table_args__ = (
         Index("idx_post_user", "post_id", "user_id"),
+        UniqueConstraint('post_id', 'user_id', name='post_user_uc'),
     )

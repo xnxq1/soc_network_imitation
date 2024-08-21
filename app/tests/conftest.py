@@ -9,8 +9,11 @@ from app.db import engine, async_session_factory
 from app.models import Base, CustomBase
 from app.posts.models import Post, PostStatus
 from app.users.models import User
+from app.likes.likes_post.models import LikePost, LikeStatus
 from httpx import AsyncClient, ASGITransport
 from app.main import app as fastapi_app
+
+
 @pytest.fixture(autouse=True, scope='session')
 async def prepare_db():
     assert os.environ['MODE'] == 'TEST'
@@ -25,13 +28,16 @@ async def prepare_db():
     users = convert_json('users')
     posts = convert_json('posts')
     poststatus = convert_json('poststatus')
+    likes_post = convert_json('likes_post')
     async with async_session_factory() as session:
         users_query = insert(User).values(users)
         posts_query = insert(Post).values(posts)
         poststatus_query = insert(PostStatus).values(poststatus)
+        likes_post_query = insert(LikePost).values(likes_post)
         await session.execute(users_query)
         await session.execute(posts_query)
         await session.execute(poststatus_query)
+        await session.execute(likes_post_query)
         await session.commit()
 
 
