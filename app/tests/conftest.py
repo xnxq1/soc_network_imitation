@@ -1,4 +1,3 @@
-import asyncio
 import json
 import os
 
@@ -6,10 +5,10 @@ import pytest
 from sqlalchemy import insert
 
 from app.db import engine, async_session_factory
-from app.models import Base, CustomBase
+from app.models import Base
 from app.posts.models import Post, PostStatus
 from app.users.models import User
-from app.likes.likes_post.models import LikePost, LikeStatus
+from app.likes.models import LikePost
 from httpx import AsyncClient, ASGITransport
 from app.main import app as fastapi_app
 

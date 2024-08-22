@@ -8,10 +8,10 @@ from sqlalchemy import pool
 from alembic import context
 from app.models import Base
 from app.config import settings
-from app.comments.models import Comment
-from app.likes.likes_post.models import LikeStatus, LikePost
-from app.posts.models import Post, PostStatus
 from app.users.models import User
+from app.posts.models import Post, PostStatus
+from app.likes.models import LikeStatus, LikeComment, LikePost
+from app.comments.models import Comment
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
