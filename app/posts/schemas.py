@@ -1,7 +1,10 @@
 from datetime import datetime
+from typing import List
 
 from fastapi import Query
 from pydantic import BaseModel
+
+from app.comments.schemas import SchemasComment
 
 
 class SchemasPostStatus(BaseModel):
@@ -31,4 +34,6 @@ class SchemasPostForUser(SchemasPostWithStatus):
     pass
 
 
+class SchemasPostWithComments(SchemasPost):
+    comments: List[SchemasComment]
 

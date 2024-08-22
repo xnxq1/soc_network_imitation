@@ -3,6 +3,8 @@ from sqlalchemy import select, insert, update, and_
 from app.likes.likes_post.models import LikePost, LikeStatus
 
 
+
+
 class DaoLike:
     model = LikePost
     @classmethod

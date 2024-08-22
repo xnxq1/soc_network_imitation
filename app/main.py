@@ -5,6 +5,7 @@ from app.users.router import router as router_user
 from app.posts.router import router as router_post
 from app.auth.router import router as router_auth
 from app.likes.likes_post.router import router_like, router_dislike
+from app.comments.router import router as router_comment
 from app.redis_conn import redis
 
 
@@ -21,4 +22,6 @@ app.include_router(router_user)
 app.include_router(router_post)
 app.include_router(router_like)
 app.include_router(router_dislike)
+app.include_router(router_comment)
+
 

@@ -1,9 +1,11 @@
 from sqlalchemy import select, insert, update
 from sqlalchemy.orm import joinedload
 
+from app.comments.models import Comment
 from app.db import async_session_factory
 from app.posts.models import Post, PostStatus
 from app.posts.schemas import SchemasPost
+from sqlalchemy.orm import selectinload, joinedload, contains_eager
 
 
 class DaoPost:
@@ -58,4 +60,15 @@ class DaoPost:
             query = select(cls.model_status).where(cls.model_status.id == post_id)
             result = await session.execute(query)
             return result.scalar_one()
+
+
+    @classmethod
+    async def get_post_with_comments(cls, post_id):
+        async with async_session_factory() as session:
+            query = (select(cls.model)
+                     .where(cls.model.id == post_id)
+                     .options(selectinload(cls.model.post_status))
+                     .options(selectinload(cls.model.comments).selectinload(Comment.child_comments)))
+            result = await session.execute(query)
+            return result.scalar_one_or_none()
 

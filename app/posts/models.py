@@ -21,4 +21,7 @@ class Post(CustomBase):
     created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow())
     post_status = relationship('PostStatus', primaryjoin='Post.id == PostStatus.id')
 
-
+    comments = relationship('Comment',
+                            back_populates='post',
+                            primaryjoin = 'Post.id == Comment.post_id',
+                            cascade='all, delete')
