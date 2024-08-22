@@ -1,0 +1,26 @@
+[
+  {
+    "text": "test 1",
+    "post_id": 1,
+    "parent_comment_id": null,
+    "user_id": 1
+  },
+  {
+    "text": "test 2",
+    "post_id": null,
+    "parent_comment_id": 1,
+    "user_id": 2
+  },
+  {
+    "text": "test 3",
+    "post_id": 1,
+    "parent_comment_id": null,
+    "user_id": 1
+  },
+  {
+    "text": "test 4",
+    "post_id": 1,
+    "parent_comment_id": null,
+    "user_id": 2
+  }
+]
