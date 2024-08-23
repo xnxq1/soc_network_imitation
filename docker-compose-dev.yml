@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
 
   db:
@@ -5,14 +7,25 @@ services:
     container_name: postgres_container
     restart: always
     depends_on:
-      - redis
+      - redis_post
     env_file:
       - .env
 
-  redis:
+  redis_post:
     image: redis:6-alpine
-    container_name: redis_container
+    container_name: redis_post_container
     restart: always
+    ports:
+      - ${REDIS_POST_PORT}:${REDIS_POST_PORT}
+    env_file:
+      - .env
+
+  redis_comment:
+    image: redis:6-alpine
+    container_name: redis_comment_container
+    restart: always
+    ports:
+      - ${REDIS_COMMENT_PORT}:${REDIS_COMMENT_PORT}
     env_file:
       - .env
 
@@ -21,24 +34,13 @@ services:
     container_name: app_service_container
     depends_on:
       - db
-      - redis
-
-    links:
-      - redis
-
+      - redis_post
     ports:
       - 8000:8000
-
     volumes:
       - .:/src
-
     command: >
       sh -c "alembic upgrade head && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000"
-    
-    
-
     env_file:
       - .env
-
-
 

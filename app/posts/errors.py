@@ -11,6 +11,10 @@ class NonePostError(BaseCustomError):
     message = 'Поста с таким id не существует'
 
 
+class NotTheAuthorAndArchivedError(BaseCustomError):
+    status_code = 409
+    message = 'Пост в архиве и вы не автор поста'
+
 class NotTheAuthorError(BaseCustomError):
     status_code = 406
     message = 'Вы не автор поста'

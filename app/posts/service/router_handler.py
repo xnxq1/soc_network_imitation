@@ -1,5 +1,6 @@
 from app.posts.dao import DaoPost
-from app.posts.errors import NonePostError, NotTheAuthorError, WrongStatusError, WrongPostError
+from app.posts.errors import NonePostError, NotTheAuthorError, WrongStatusError, WrongPostError, \
+    NotTheAuthorAndArchivedError
 
 
 class PostHandler:
@@ -21,3 +22,16 @@ class PostHandler:
             raise NotTheAuthorError()
 
         await DaoPost.archiving_unarchiving_post(post_id=post_id, archived=archived)
+
+
+    @staticmethod
+    async def get_post_with_comments(post_id: int, user_id: int):
+        post = await DaoPost.get_post_with_comments(post_id)
+        if not post:
+            raise NonePostError()
+        post_dict = post.__dict__
+        post_dict['post_status'] = post_dict['post_status'][0].__dict__
+        if post_dict['post_status']['is_archived'] == True and post_dict['author_id'] != user_id:
+            raise NotTheAuthorAndArchivedError()
+        #if post_dict.get('pos')
+        return post

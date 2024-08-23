@@ -38,5 +38,4 @@ async def unarchiving_post(post_id: int, user=Depends(JWTUser.get_curr_user)):
 
 @router.get("/get_post_with_comments")
 async def get_post_with_comments(post_id: int, user=Depends(JWTUser.get_curr_user)):
-    post = await DaoPost.get_post_with_comments(post_id)
-    return post
+    return await PostHandler.get_post_with_comments(post_id, user.id)

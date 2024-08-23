@@ -19,8 +19,11 @@ class Settings(BaseSettings):
     SECRETKEY: str
     ALGORITHM: str
 
-    REDIS_HOST: str
-    REDIS_PORT: int
+    REDIS_POST_HOST: str
+    REDIS_POST_PORT: int
+
+    REDIS_COMMENT_HOST: str
+    REDIS_COMMENT_PORT: int
 
     TEST_DB_HOST: str
     TEST_DB_PORT: int
